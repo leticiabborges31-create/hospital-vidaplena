@@ -1,4 +1,7 @@
-const BASE = 'http://localhost:8080/api/agendamentos'
+// Endereço da API: em produção vem da variável VITE_API_URL (veja .env.example)
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+
+const BASE = `${API}/api/agendamentos`
 
 import { useAuth } from '../composables/useAuth.js'
 
@@ -27,18 +30,18 @@ export const api = {
 
 // ---- Ações do paciente (sem login): código + CPF ----
 export const apiPaciente = {
-  checkin: (codigo, cpf) => req('http://localhost:8080/api/paciente/checkin', { method: 'POST', body: JSON.stringify({ codigo, cpf }) }),
-  cancelar: (codigo, cpf) => req('http://localhost:8080/api/paciente/cancelar', { method: 'POST', body: JSON.stringify({ codigo, cpf }) })
+  checkin: (codigo, cpf) => req(`${API}/api/paciente/checkin`, { method: 'POST', body: JSON.stringify({ codigo, cpf }) }),
+  cancelar: (codigo, cpf) => req(`${API}/api/paciente/cancelar`, { method: 'POST', body: JSON.stringify({ codigo, cpf }) })
 }
 
 // ---- Login e cadastro ----
 export const apiAuth = {
-  cadastrar: dados => req('http://localhost:8080/api/auth/cadastro', { method: 'POST', body: JSON.stringify(dados) }),
-  entrar: dados => req('http://localhost:8080/api/auth/login', { method: 'POST', body: JSON.stringify(dados) })
+  cadastrar: dados => req(`${API}/api/auth/cadastro`, { method: 'POST', body: JSON.stringify(dados) }),
+  entrar: dados => req(`${API}/api/auth/login`, { method: 'POST', body: JSON.stringify(dados) })
 }
 
 // ---- Painel da equipe ----
-const BASE_API = 'http://localhost:8080/api'
+const BASE_API = `${API}/api`
 
 export const apiAdmin = {
   checkin: codigo => req(`${BASE}/${codigo}/checkin`, { method: 'POST' }),
